@@ -38,7 +38,7 @@ Realizar el front de la aplicación en twig para poder realizar la prueba del se
 ```
 git clone git@github.com:jguarecuco/evaluationw3.git
 
-cd symfony-5-docker
+cd evaluationw3
 
 cd docker
 
