@@ -1,0 +1,61 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="container">
+<h1>
+{{ text }}
+
+</h1>
+
+<div class="form-group"> 
+<input class="form-control" type="text" id="search" placeholder="Escribe el nombre del pais a buscar"/>
+</div>
+
+<div class="form-group"> 
+<button type="button" class="btn btn-primary" onClick="buscar()">Buscar</button>
+</div>
+<br />
+<div class="table-responsive">
+<table class="table">
+<thead>
+<tr>
+<th>Pais</th>
+<th>Población</th>
+<th>Porcentaje</th>
+</tr>
+<thead/>
+<tbody id="result">
+</tbody>
+</table>
+</div>
+<div id="error"></div>
+</div>
+{% endblock %}
+
+{% block javascripts%}
+<script>
+const buscar= async ()=>{
+    const searchTxt=document.querySelector("#search").value;
+     var error=document.getElementById("error");
+     error.innerHTML=""
+    var table=document.getElementById("result");
+    var data=await fetch("/paises?name="+searchTxt) ;
+    table.innerHTML="";
+    if (data.status==200){
+        var info=await data.json();
+     info.forEach((item)=>{
+            var row=table.insertRow();
+            var name=row.insertCell();
+            name.innerHTML=item.name;
+            var population=row.insertCell();
+            population.innerHTML=item.population;
+            var porcentaje=row.insertCell();
+            porcentaje.innerHTML=item.porcentaje;
+     })
+       
+    }else{
+        
+        error.innerHTML="No se encontraron resultado"
+    }
+}
+</script>
+{% endblock %}
